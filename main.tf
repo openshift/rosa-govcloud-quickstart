@@ -122,3 +122,42 @@ resource "aws_route" "nat_gateway" {
   destination_cidr_block = "0.0.0.0/0"
   nat_gateway_id         = aws_nat_gateway.rosa[each.key].id
 }
+
+// Create a jumphost
+resource "aws_security_group" "jumphost_sg" {
+  name = "${var.name}-jumphost-sg"
+  vpc_id = aws_vpc.rosa.id
+
+  tags = {
+    Name = "${var.name}-jumphost-sg"
+  }
+}
+
+resource "aws_vpc_security_group_ingress_rule" "jumphost_sg_ssh" {
+  security_group_id = aws_security_group.jumphost_sg.id
+
+  cidr_ipv4 = "0.0.0.0/0"
+  to_port = 22
+  from_port = 22
+  ip_protocol = "tcp"
+}
+
+resource "tls_private_key" "jumphost_key" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
+resource "aws_key_pair" "jumphost_key_pair" {
+  key_name   = "${var.name}-jumphost-key"
+  public_key = tls_private_key.jumphost_key.public_key_openssh
+}
+
+resource "aws_instance" "jumphost" {
+  ami = "ami-04482d061459e6c32"
+  instance_type = "t3.micro"
+  key_name = aws_key_pair.jumphost_key_pair.key_name
+  security_groups = [
+    aws_security_group.jumphost_sg.id
+  ]
+  subnet_id = aws_subnet.rosa_public[data.aws_availability_zones.available.names[0]].id
+}

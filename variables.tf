@@ -17,6 +17,6 @@ variable "multi_az" {
 
 variable "create_elb_iam_role" {
   type        = bool
-  default     = true
+  default     = false
   description = "Create the elasticloadbalancing IAM service-linked role"
 }
