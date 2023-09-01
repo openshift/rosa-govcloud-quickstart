@@ -142,6 +142,14 @@ resource "aws_vpc_security_group_ingress_rule" "jumphost_sg_ssh" {
   ip_protocol = "tcp"
 }
 
+resource "aws_vpc_security_group_egress_rule" "jumphost_sg_outbound" {
+  security_group_id = aws_security_group.jumphost_sg.id
+  to_port = 65535
+  from_port = 0
+  cidr_ipv4 = "0.0.0.0/0"
+  ip_protocol = "tcp"
+}
+
 resource "aws_key_pair" "jumphost_key_pair" {
   key_name   = "${var.name}-jumphost-key"
   public_key = file(var.bastion_key_loc)

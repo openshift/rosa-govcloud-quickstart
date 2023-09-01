@@ -1,13 +1,3 @@
-output "private_subnet_ids" {
-  description = "Private subnet IDs"
-  value       = [for subnet in aws_subnet.rosa_private : subnet.id]
-}
-
-output "jumphost_public_ip" {
-  description = "Jumphost Public IP"
-  value = aws_instance.jumphost.public_ip
-}
-
 output "next_steps" {
   value = <<EOF
 
