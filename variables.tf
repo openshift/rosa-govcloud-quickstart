@@ -1,3 +1,25 @@
+data "aws_ami" "rhel8" {
+  most_recent      = true
+
+  filter {
+    name   = "name"
+    values = ["RHEL-8.6*"]
+  }
+  filter {
+    name   = "architecture"
+    values = ["x86_64"]
+  }
+  filter {
+    name   = "root-device-type"
+    values = ["ebs"]
+  }
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+
+}
+
 variable "name" {
   type        = string
   description = "ROSA cluster name"
@@ -19,4 +41,10 @@ variable "create_elb_iam_role" {
   type        = bool
   default     = false
   description = "Create the elasticloadbalancing IAM service-linked role"
+}
+
+variable "bastion_key_loc" {
+  type        = string
+  default     = "./jumphost-key.pub"
+  description = "Location of public key for bastion"
 }

@@ -142,22 +142,34 @@ resource "aws_vpc_security_group_ingress_rule" "jumphost_sg_ssh" {
   ip_protocol = "tcp"
 }
 
-resource "tls_private_key" "jumphost_key" {
-  algorithm = "RSA"
-  rsa_bits  = 4096
-}
-
 resource "aws_key_pair" "jumphost_key_pair" {
   key_name   = "${var.name}-jumphost-key"
-  public_key = tls_private_key.jumphost_key.public_key_openssh
+  public_key = file(var.bastion_key_loc)
 }
 
 resource "aws_instance" "jumphost" {
-  ami = "ami-04482d061459e6c32"
+  ami = data.aws_ami.rhel8.id
   instance_type = "t3.micro"
   key_name = aws_key_pair.jumphost_key_pair.key_name
-  security_groups = [
+  vpc_security_group_ids = [
     aws_security_group.jumphost_sg.id
   ]
   subnet_id = aws_subnet.rosa_public[data.aws_availability_zones.available.names[0]].id
+  tags = {
+    Name = "${var.name}-jumphost"
+  }
+  associate_public_ip_address = true
+  user_data = <<EOF
+#!/bin/bash
+set -e -x
+
+sudo dnf install -y wget curl python36 python36-devel net-tools gcc libffi-devel openssl-devel jq bind-utils podman
+
+wget https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux.tar.gz
+
+mkdir openshift
+tar -zxvf openshift-client-linux.tar.gz -C openshift
+sudo install openshift/oc /usr/local/bin/oc
+sudo install openshift/kubectl /usr/local/bin/kubectl
+EOF
 }
