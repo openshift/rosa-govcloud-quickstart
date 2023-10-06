@@ -23,6 +23,11 @@ data "aws_ami" "rhel8" {
 variable "name" {
   type        = string
   description = "ROSA cluster name"
+
+  validation {
+    condition     = length(var.name) <= 15
+    error_message = "The ROSA cluster name must be 15 characters or fewer."
+  }
 }
 
 variable "cidr" {
