@@ -26,7 +26,7 @@ Ensure that `aws`, `terraform`, `sshuttle`, and `rosa` CLIs are installed and co
 ## Running the Installation
 Terraform will output the command you should use to create your rosa cluster. Copy and run it to kick off the install It will look something like this:
 ```bash
-rosa create cluster --cluster-name andy-demo-2 --mode auto --sts \
+rosa create cluster --cluster-name rosa-gc-demo --mode auto --sts \
   --machine-cidr 10.0.0.0/17 --service-cidr 172.30.0.0/16 \
   --pod-cidr 10.128.0.0/14 --host-prefix 23 --yes \
   --private-link --subnet-ids subnet-03b5943cfb7921b85
