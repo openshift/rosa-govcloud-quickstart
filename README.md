@@ -38,6 +38,21 @@ Once the installation has completed, review the next steps in cluster access fro
 terraform output next_steps
 ```
 
+You'll get an output of useful commands to create an admin user and an `sshuttle` VPN tunnel to enable you to access the cluster in your browser or via CLI from your laptop. It looks something like this:
+```bash
+# * Once the cluster is up, create an Admin user:
+# $ rosa create admin -c rosa-gc-demo
+
+# * Run the command provided above to log into the cluster
+
+# * Create a sshuttle VPN via your jumphost:
+# $ sshuttle --ssh-cmd 'ssh -i jumphost-key' --dns -NHr ec2-user@15.200.235.209 10.0.0.0/16
+
+# * Find the URL of the cluster's console and log into it via your web browser
+# $ rosa describe cluster -c rosa-gc-demo -o json | jq -r .console.url
+```
+> If you don't have sshuttle installed, you can download it from github [here](https://github.com/sshuttle/sshuttle#obtaining-sshuttle).
+
 ## Cleaning Up
 Delete the rosa cluster and destroy terraform assets:
 ```bash

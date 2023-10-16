@@ -15,11 +15,11 @@ $ rosa create cluster --cluster-name ${var.name} --mode auto --sts --version 4.1
 
 # * Run the command provided above to log into the cluster
 
-# * Find the URL of the cluster's console and log into it via your web browser
-# $ rosa describe cluster -c ${var.name} -o json | jq -r .console.url
-
 # * Create a sshuttle VPN via your jumphost:
 # $ sshuttle --ssh-cmd 'ssh -i jumphost-key' --dns -NHr ec2-user@${aws_instance.jumphost.public_ip} ${aws_vpc.rosa.cidr_block}
+
+# * Find the URL of the cluster's console and log into it via your web browser
+# $ rosa describe cluster -c ${var.name} -o json | jq -r .console.url
 
 EOF
   description = "ROSA cluster creation command"
