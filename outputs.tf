@@ -5,7 +5,7 @@ output "next_steps" {
 ***** Next steps *****
 
 * Create your ROSA cluster:
-$ rosa create cluster --cluster-name ${var.name} --mode auto --sts --version 4.11.46 \
+$ rosa create cluster --cluster-name ${var.name} --mode auto --sts --version 4.12.45 \
   --machine-cidr ${aws_subnet.rosa_private[data.aws_availability_zones.available.names[0]].cidr_block} --service-cidr 172.30.0.0/16 \
   --pod-cidr 10.128.0.0/14 --host-prefix 23 --yes \
   --private-link --subnet-ids ${aws_subnet.rosa_private[data.aws_availability_zones.available.names[0]].id}
