@@ -156,7 +156,7 @@ resource "aws_key_pair" "jumphost_key_pair" {
 }
 
 resource "aws_instance" "jumphost" {
-  ami = data.aws_ami.rhel8.id
+  ami = data.aws_ami.rhel9.id
   instance_type = "t3.micro"
   key_name = aws_key_pair.jumphost_key_pair.key_name
   vpc_security_group_ids = [
@@ -171,12 +171,12 @@ resource "aws_instance" "jumphost" {
 #!/bin/bash
 set -e -x
 
-sudo dnf install -y wget curl python36 python36-devel net-tools gcc libffi-devel openssl-devel jq bind-utils podman
+sudo dnf install -y wget curl python3 python3-devel net-tools gcc libffi-devel openssl-devel jq bind-utils podman
 
-wget https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux.tar.gz
+wget https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable/openshift-client-linux-amd64-rhel9.tar.gz
 
 mkdir openshift
-tar -zxvf openshift-client-linux.tar.gz -C openshift
+tar -zxvf openshift-client-linux-amd64-rhel9.tar.gz -C openshift
 sudo install openshift/oc /usr/local/bin/oc
 sudo install openshift/kubectl /usr/local/bin/kubectl
 EOF
