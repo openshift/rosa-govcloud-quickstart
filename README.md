@@ -10,7 +10,7 @@ Ensure that `aws`, `terraform`, `sshuttle`, and `rosa` CLIs are installed and co
 ## Creating the VPC
 1. Clone this git repository and `cd` into it:
    ```bash
-   git clone https://github.com/andykrohg/rosa-govcloud-quickstart
+   git clone https://github.com/openshift/rosa-govcloud-quickstart
    cd rosa-govcloud-quickstart
    ```
 2. Create an SSH key pair to use for a jumphost
