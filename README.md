@@ -2,7 +2,7 @@
 
 This Terraform module is a quickstart for provisioning a VPC to house a ROSA cluster in AWS GovCloud for demonstration purposes. It will also create a jumphost for access into the cluster once it comes up.
 
-See [examples](./examples) and [https://docs.openshift.com/container-platform/4.11/installing/installing_aws/installing-aws-vpc.html](https://docs.openshift.com/container-platform/4.11/installing/installing_aws/installing-aws-vpc.html) for full requirements.
+See [examples](./examples) and [https://docs.redhat.com/en/documentation/openshift_container_platform/4.16/html/installing_on_aws/installer-provisioned-infrastructure#installing-aws-vpc](https://docs.redhat.com/en/documentation/openshift_container_platform/4.16/html/installing_on_aws/installer-provisioned-infrastructure#installing-aws-vpc) for full requirements.
 
 ## Prerequisites
 Ensure that `aws`, `terraform`, `sshuttle`, and `rosa` CLIs are installed and configured with credentials, if applicable.
